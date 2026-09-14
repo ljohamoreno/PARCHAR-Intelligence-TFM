@@ -198,3 +198,37 @@ PARCHAR-Intelligence-TFM/
 ├── reports/
 ├── figures/
 └── docs/
+```
+
+La estructura será completada con los artefactos finales y reproducibles del proyecto.
+
+---
+
+## ⚠️ Alcance y limitaciones
+
+Los resultados corresponden al dominio y a los datos analizados en el TFM.
+
+La evidencia complementaria muestra que el desempeño puede variar cuando cambian las condiciones territoriales o el dominio de aplicación. Por esta razón, **PARCHAR Intelligence debe entenderse como una herramienta de apoyo analítico y no como un sistema de decisión automatizada**.
+
+La aplicación a nuevos territorios requiere validación adicional y, cuando corresponda, incorporación de nuevos datos y reentrenamiento.
+
+---
+
+## 👩‍💻 Autora
+
+**Leidy Johanna Moreno P.**
+
+Trabajo Fin de Máster  
+**Máster en Big Data, Data Science y Business Analytics**
+
+Universidad Complutense de Madrid
+
+2026
+
+---
+
+## 📌 Estado del proyecto
+
+**TFM — versión final**
+
+El repositorio documenta el desarrollo metodológico, los resultados y los artefactos reproducibles de **PARCHAR Intelligence**.
