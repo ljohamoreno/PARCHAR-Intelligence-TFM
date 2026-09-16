@@ -184,7 +184,7 @@ La capa BI funciona como **herramienta de apoyo analítico y no como mecanismo d
 
 La versión interactiva de **PARCHAR Intelligence** puede consultarse en:
 
-**(https://public.tableau.com/app/profile/leidy.johanna.moreno.posada/viz/TABLEAUPARCHARINTELLIGENCELJMP/Dashboard1?publish=yes)**
+**https://public.tableau.com/app/profile/leidy.johanna.moreno.posada/viz/TABLEAUPARCHARINTELLIGENCELJMP/Dashboard1?publish=yes**
 
 ---
 
@@ -228,7 +228,7 @@ El repositorio reúne los principales artefactos reproducibles y documentales de
 - **Notebook reproducible:** exportación HTML del pipeline analítico completo y sus resultados.
 - **Tableau Packaged Workbook:** versión empaquetada de la capa de Business Intelligence.
 - **Presentación:** síntesis visual desarrollada para la presentación audiovisual del proyecto.
-- **Anexos documentales:** evidencias y materiales complementarios utilizados para la trazabilidad del proyecto.
+- **Anexo documental:** confirmación de ANATO relacionada con el uso académico de la información empleada en el proyecto.
 
 La versión interactiva de la capa de Business Intelligence se encuentra disponible mediante **Tableau Public**.
 
@@ -255,8 +255,7 @@ PARCHAR-Intelligence-TFM/
 │   └── Leidy_Johanna_Moreno_Posada_PARCHAR_Presentacion.pdf
 │
 └── anexos/
-    ├── Leidy_Johanna_Moreno_Posada_Confirmacion_ANATO.pdf
-    └── Leidy_Johanna_Moreno_Posada_ICTRC_2025.pdf
+    └── Leidy_Johanna_Moreno_Posada_Confirmacion_ANATO.pdf
 ```
 
 ---
@@ -282,13 +281,15 @@ La versión HTML permite consultar el desarrollo completo y los resultados obten
 
 ---
 
-## 🗃️ Nota sobre los datos
+## 🗃️ Nota sobre los datos y fuentes externas
 
-Los datos utilizados en el proyecto proceden de distintas fuentes públicas y documentales identificadas en la memoria académica.
+Los datos utilizados en el proyecto proceden de distintas fuentes públicas y documentales identificadas y citadas en la memoria académica.
 
-El repositorio prioriza la **reproducibilidad metodológica, documentación y trazabilidad del proyecto** y no redistribuye de forma indiscriminada datasets originales procedentes de terceros.
+El repositorio prioriza la **reproducibilidad metodológica, documentación y trazabilidad del proyecto** y no redistribuye de forma indiscriminada datasets o documentos originales procedentes de terceros.
 
 Las fuentes, criterios de integración y transformaciones utilizadas se encuentran documentados en la memoria y en el notebook final.
+
+El **Índice de Competitividad Turística Regional de Colombia (ICTRC) 2025**, utilizado como fuente documental del proyecto, se encuentra debidamente referenciado en la memoria académica y **no se redistribuye íntegramente en este repositorio**.
 
 ---
 
