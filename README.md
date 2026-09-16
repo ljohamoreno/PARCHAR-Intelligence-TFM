@@ -25,18 +25,18 @@ El estudio principal utiliza un dataset analítico final compuesto por:
 - **128 reseñas no positivas**
 - Variables **textuales, estructurales y contextuales**
 
-El conjunto fue dividido en:
+El conjunto fue dividido de forma estratificada en:
 
 - **TRAIN:** 688 observaciones
 - **TEST:** 173 observaciones
 
-El conjunto TEST permaneció reservado durante la selección, ajuste y análisis de sensibilidad de los modelos.
+El conjunto **TEST permaneció reservado durante la selección y ajuste de los modelos**. Su apertura se realizó una única vez para la evaluación final del estudio principal.
 
 ---
 
 ## 🧪 Diseño experimental
 
-Se evaluaron siete especificaciones:
+Se evaluaron siete especificaciones para analizar el valor incremental de las diferentes familias de información:
 
 | Modelo | Especificación |
 |---|---|
@@ -52,10 +52,12 @@ La selección se realizó exclusivamente sobre **TRAIN** mediante validación cr
 
 Las métricas principales fueron:
 
-- Balanced Accuracy
-- Macro-F1
-- F1 de la clase No positiva
-- Recall de la clase No positiva
+- **Balanced Accuracy**
+- **Macro-F1**
+- **F1 de la clase No positiva**
+- **Recall de la clase No positiva**
+
+Este diseño permitió analizar no solo qué especificación obtenía mejor desempeño, sino también cuánto valor incremental aportaban las variables estructurales y contextuales frente al texto.
 
 ---
 
@@ -73,7 +75,7 @@ El pipeline combina:
 - clasificador **LinearSVC**;
 - `class_weight="balanced"`.
 
-La selección del modelo y sus hiperparámetros se realizó antes de observar los resultados del conjunto TEST.
+La selección del modelo y sus hiperparámetros se realizó **antes de observar los resultados del conjunto TEST**.
 
 ---
 
@@ -88,15 +90,19 @@ Resultados de **M4** sobre el conjunto TEST:
 | F1 No positiva | **0.6429** |
 | Recall No positiva | **0.6923** |
 
-**M1 — Texto** obtuvo una Balanced Accuracy de **0.8314** en TEST y se conserva como benchmark secundario.
+En términos operativos, M4 identificó correctamente **18 de las 26 experiencias No positivas** presentes en TEST.
 
-M4 permanece como modelo oficial porque fue seleccionado mediante el protocolo pre-test definido exclusivamente sobre TRAIN; los resultados de TEST no se utilizaron para modificar retrospectivamente la selección.
+Como benchmark secundario, **M1 — Texto** obtuvo una Balanced Accuracy de **0.8314** en TEST.
+
+Aunque M1 presentó descriptivamente un resultado superior en esta métrica, **M4 permanece como modelo oficial** porque fue seleccionado mediante el protocolo pre-test definido exclusivamente sobre TRAIN.
+
+Los resultados de TEST no se utilizaron para modificar retrospectivamente la selección del modelo.
 
 ---
 
 ## 🔬 Robustez y evidencia complementaria
 
-El proyecto incorpora análisis adicionales orientados a evaluar la estabilidad y los límites de generalización del sistema.
+El proyecto incorpora análisis adicionales orientados a evaluar la estabilidad, escalabilidad y límites de generalización del sistema.
 
 ### Sensibilidades pre-test
 
@@ -107,13 +113,25 @@ El proyecto incorpora análisis adicionales orientados a evaluar la estabilidad 
 
 ### Experimento A — Escalabilidad intra-dominio
 
-Evalúa el efecto de ampliar el volumen de entrenamiento utilizando nuevas reseñas correspondientes a los mismos POI del dominio original, manteniendo congelado el TEST oficial.
+Se evaluó el efecto de ampliar el conjunto de entrenamiento mediante **778 nuevas reseñas elegibles** correspondientes a los mismos POI del dominio original.
+
+El conjunto de entrenamiento experimental pasó de:
+
+**688 → 1.466 observaciones**
+
+mientras el **TEST oficial de 173 reseñas permaneció congelado**.
+
+Este experimento se realizó como análisis complementario y **no implicó una nueva selección del modelo oficial**.
+
+Los resultados aportan evidencia favorable sobre la escalabilidad dentro del dominio analizado, pero no constituyen una garantía de rendimiento equivalente en territorios nuevos.
 
 ### Experimento B1 — Generalización territorial externa
 
-Evalúa los modelos oficiales sobre un corpus independiente de **Nariño**, compuesto por POI y territorio no observados durante el entrenamiento.
+Se evaluaron los modelos oficiales sobre un corpus independiente correspondiente a **Nariño**, compuesto por POI y territorio no observados durante el entrenamiento.
 
-Los experimentos complementarios no sustituyen los resultados oficiales del estudio principal y permiten caracterizar tanto oportunidades de escalabilidad como limitaciones de generalización.
+Este experimento permitió estudiar el comportamiento del sistema ante un cambio territorial y evidenció la necesidad de **validación local antes de desplegar PARCHAR Intelligence en nuevos destinos**.
+
+Los experimentos complementarios no sustituyen los resultados oficiales del estudio principal y permiten caracterizar tanto oportunidades de escalabilidad como límites de generalización.
 
 ---
 
@@ -121,9 +139,9 @@ Los experimentos complementarios no sustituyen los resultados oficiales del estu
 
 El modelo final incorpora análisis de coeficientes para identificar variables y términos asociados predictivamente con cada clase.
 
-Los coeficientes se interpretan como **asociaciones predictivas**, no como relaciones causales.
+Los coeficientes se interpretan como **asociaciones predictivas y no como relaciones causales**.
 
-También se realiza un análisis post hoc de errores sobre TEST para caracterizar falsos positivos y falsos negativos sin modificar el modelo final.
+También se realizó un análisis post hoc de errores sobre TEST para caracterizar falsos positivos y falsos negativos **sin modificar el modelo final**.
 
 ---
 
@@ -135,29 +153,38 @@ El flujo general de PARCHAR Intelligence puede resumirse como:
 
 El proyecto incorpora controles específicos para:
 
-- prevención de data leakage;
-- independencia TRAIN / TEST;
+- prevención de **data leakage**;
+- independencia **TRAIN / TEST**;
 - deduplicación textual;
 - trazabilidad de transformaciones;
 - reproducibilidad;
 - protección del conjunto TEST;
-- separación entre estudio principal y experimentos complementarios.
+- separación entre el estudio principal y los experimentos complementarios.
 
 ---
 
 ## 📊 Business Intelligence
 
-Los resultados analíticos se trasladan a una capa de **Business Intelligence en Tableau**, orientada a perfiles no técnicos.
+Los resultados analíticos se trasladan a una capa de **Business Intelligence desarrollada en Tableau**, orientada a perfiles no técnicos.
 
-La solución permite explorar indicadores de experiencia turística y analizar diferencias entre:
+La solución permite explorar información relacionada con:
 
 - destinos;
 - puntos de interés;
-- categorías;
+- categorías turísticas;
+- reseñas y satisfacción;
 - periodos;
-- señales de satisfacción e insatisfacción.
+- indicadores contextuales, turísticos y macroeconómicos.
 
-La capa BI funciona como apoyo a la interpretación y a la toma de decisiones, no como mecanismo de decisión automatizada.
+Esta capa permite complementar los resultados predictivos con una perspectiva descriptiva y territorial orientada al análisis y apoyo a la toma de decisiones.
+
+La capa BI funciona como **herramienta de apoyo analítico y no como mecanismo de decisión automatizada**.
+
+### 🌐 Tableau Public
+
+La versión interactiva de **PARCHAR Intelligence** puede consultarse en:
+
+**(https://public.tableau.com/app/profile/leidy.johanna.moreno.posada/viz/TABLEAUPARCHARINTELLIGENCELJMP/Dashboard1?publish=yes)**
 
 ---
 
@@ -165,15 +192,21 @@ La capa BI funciona como apoyo a la interpretación y a la toma de decisiones, n
 
 Como prueba de concepto de productivización, PARCHAR Intelligence incorpora un **Tourist Review Analyzer**.
 
-El prototipo permite introducir una nueva reseña y aplicar sobre ella el pipeline NLP y el modelo M4 previamente entrenado para obtener una clasificación:
+El prototipo permite introducir una nueva reseña y aplicar sobre ella el pipeline de Procesamiento del Lenguaje Natural y el modelo **M4 previamente entrenado** para obtener una clasificación:
 
 **Positiva / No positiva**
 
-El modelo no se reentrena durante la inferencia y las fotografías incorporadas en la experiencia demostrativa no participan en la predicción.
+El modelo no se reentrena durante la inferencia.
+
+Las fotografías incorporadas en la experiencia demostrativa tienen únicamente una función visual y **no participan en la predicción**.
+
+La implementación y demostración del prototipo se encuentran integradas en el **notebook final del proyecto**.
 
 ---
 
 ## 🛠️ Tecnologías
+
+El proyecto fue desarrollado principalmente con:
 
 - **Python**
 - **pandas**
@@ -187,6 +220,20 @@ El modelo no se reentrena durante la inferencia y las fotografías incorporadas 
 
 ---
 
+## 📦 Artefactos del proyecto
+
+El repositorio reúne los principales artefactos reproducibles y documentales de **PARCHAR Intelligence**:
+
+- **Memoria final:** documento académico del TFM en formato PDF.
+- **Notebook reproducible:** exportación HTML del pipeline analítico completo y sus resultados.
+- **Tableau Packaged Workbook:** versión empaquetada de la capa de Business Intelligence.
+- **Presentación:** síntesis visual desarrollada para la presentación audiovisual del proyecto.
+- **Anexos documentales:** evidencias y materiales complementarios utilizados para la trazabilidad del proyecto.
+
+La versión interactiva de la capa de Business Intelligence se encuentra disponible mediante **Tableau Public**.
+
+---
+
 ## 📁 Estructura del repositorio
 
 ```text
@@ -194,21 +241,64 @@ PARCHAR-Intelligence-TFM/
 │
 ├── README.md
 ├── .gitignore
-├── notebooks/
-├── reports/
-├── figures/
-└── docs/
+│
+├── notebook/
+│   └── Leidy_Johanna_Moreno_Posada_PARCHAR_Notebook.html
+│
+├── tableau/
+│   └── Leidy_Johanna_Moreno_Posada_PARCHAR_Tableau.twbx
+│
+├── docs/
+│   └── Leidy_Johanna_Moreno_Posada_TFM_PARCHAR_Intelligence.pdf
+│
+├── presentation/
+│   └── Leidy_Johanna_Moreno_Posada_PARCHAR_Presentacion.pdf
+│
+└── anexos/
+    ├── Leidy_Johanna_Moreno_Posada_Confirmacion_ANATO.pdf
+    └── Leidy_Johanna_Moreno_Posada_ICTRC_2025.pdf
 ```
 
-La estructura será completada con los artefactos finales y reproducibles del proyecto.
+---
+
+## 🔄 Reproducibilidad
+
+El notebook final documenta el pipeline analítico desarrollado para PARCHAR Intelligence, incluyendo las principales etapas de:
+
+1. adquisición e integración de fuentes;
+2. controles de calidad y trazabilidad;
+3. preparación y limpieza de datos;
+4. Procesamiento del Lenguaje Natural;
+5. construcción de variables;
+6. separación TRAIN / TEST;
+7. modelado y validación cruzada;
+8. selección pre-test;
+9. evaluación final;
+10. interpretabilidad y análisis de errores;
+11. análisis complementarios de robustez y generalización;
+12. prueba de concepto de inferencia sobre nuevas reseñas.
+
+La versión HTML permite consultar el desarrollo completo y los resultados obtenidos **sin necesidad de ejecutar el notebook**.
+
+---
+
+## 🗃️ Nota sobre los datos
+
+Los datos utilizados en el proyecto proceden de distintas fuentes públicas y documentales identificadas en la memoria académica.
+
+El repositorio prioriza la **reproducibilidad metodológica, documentación y trazabilidad del proyecto** y no redistribuye de forma indiscriminada datasets originales procedentes de terceros.
+
+Las fuentes, criterios de integración y transformaciones utilizadas se encuentran documentados en la memoria y en el notebook final.
 
 ---
 
 ## ⚠️ Alcance y limitaciones
 
-Los resultados corresponden al dominio y a los datos analizados en el TFM.
+Los resultados corresponden al dominio y a los datos analizados en el Trabajo Fin de Máster.
 
-La evidencia complementaria muestra que el desempeño puede variar cuando cambian las condiciones territoriales o el dominio de aplicación. Por esta razón, **PARCHAR Intelligence debe entenderse como una herramienta de apoyo analítico y no como un sistema de decisión automatizada**.
+La evidencia complementaria muestra que el desempeño puede variar cuando cambian las condiciones territoriales o el dominio de aplicación.
+
+Por esta razón, **PARCHAR Intelligence debe entenderse como una herramienta de apoyo analítico y no como un sistema de decisión automatizada**.
 
 La aplicación a nuevos territorios requiere validación adicional y, cuando corresponda, incorporación de nuevos datos y reentrenamiento.
 
@@ -216,12 +306,11 @@ La aplicación a nuevos territorios requiere validación adicional y, cuando cor
 
 ## 👩‍💻 Autora
 
-**Leidy Johanna Moreno P.**
+**Leidy Johanna Moreno Posada**
 
 Trabajo Fin de Máster  
-**Máster en Big Data, Data Science y Business Analytics**
-
-Universidad Complutense de Madrid
+**Máster en Big Data, Data Science y Business Analytics**  
+Universidad Complutense de Madrid  
 
 2026
 
@@ -229,6 +318,10 @@ Universidad Complutense de Madrid
 
 ## 📌 Estado del proyecto
 
-**TFM — versión final**
+**TFM finalizado — 2026**
 
-El repositorio documenta el desarrollo metodológico, los resultados y los artefactos reproducibles de **PARCHAR Intelligence**.
+El pipeline analítico principal se encuentra cerrado y los resultados oficiales están congelados.
+
+Los experimentos complementarios se presentan como análisis de robustez, escalabilidad y generalización y **no modifican retrospectivamente la selección del modelo oficial**.
+
+**PARCHAR Intelligence — descubrir · analizar · decidir. 🇨🇴**
